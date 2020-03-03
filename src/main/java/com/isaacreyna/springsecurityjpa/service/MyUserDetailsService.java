@@ -1,7 +1,8 @@
-package com.isaacreyna.springsecurityjpa;
+package com.isaacreyna.springsecurityjpa.service;
 
-import com.isaacreyna.springsecurityjpa.models.MyUserDetails;
-import com.isaacreyna.springsecurityjpa.models.User;
+import com.isaacreyna.springsecurityjpa.repository.UserRepository;
+import com.isaacreyna.springsecurityjpa.model.MyUserDetails;
+import com.isaacreyna.springsecurityjpa.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

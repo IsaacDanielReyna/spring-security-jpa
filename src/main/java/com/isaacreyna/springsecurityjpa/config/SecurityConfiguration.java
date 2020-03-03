@@ -1,4 +1,4 @@
-package com.isaacreyna.springsecurityjpa;
+package com.isaacreyna.springsecurityjpa.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +23,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/").permitAll()
-                .and().formLogin();
+        http
+            .authorizeRequests()
+            .antMatchers("/admin").hasRole("ADMIN")
+            .antMatchers("/user").hasAnyRole("ADMIN", "USER")
+            .antMatchers("/").permitAll()
+            //.antMatchers("/profile").hasRole("ADMIN")
+            //.anyRequest().authenticated() // Force everything else to be authenticated, even if they do not exist
+            .and()
+            .exceptionHandling().accessDeniedPage("/accessDenied.html")
+            .and()
+            .formLogin()
+            .loginPage("/login").permitAll();
+            //.and().logout().logoutUrl("/logout").logoutSuccessful("/login");
     }
 
     @Bean // clear text passwords! DO NOT USE IN PRODUCTION!!!

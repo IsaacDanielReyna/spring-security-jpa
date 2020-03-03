@@ -1,6 +1,6 @@
-package com.isaacreyna.springsecurityjpa;
+package com.isaacreyna.springsecurityjpa.repository;
 
-import com.isaacreyna.springsecurityjpa.models.User;
+import com.isaacreyna.springsecurityjpa.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

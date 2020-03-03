@@ -1,5 +1,6 @@
 package com.isaacreyna.springsecurityjpa;
 
+import com.isaacreyna.springsecurityjpa.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

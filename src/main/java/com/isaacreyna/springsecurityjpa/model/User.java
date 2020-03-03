@@ -1,4 +1,4 @@
-package com.isaacreyna.springsecurityjpa.models;
+package com.isaacreyna.springsecurityjpa.model;
 
 import javax.persistence.*;
 

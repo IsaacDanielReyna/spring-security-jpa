@@ -1,4 +1,4 @@
-package com.isaacreyna.springsecurityjpa.models;
+package com.isaacreyna.springsecurityjpa.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
