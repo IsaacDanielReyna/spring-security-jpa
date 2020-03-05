@@ -15,6 +15,9 @@ public class MyUserDetails implements UserDetails {
     private String password;
     private boolean active;
     private List<GrantedAuthority> authorities;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     /*
     public MyUserDetails(){
@@ -28,6 +31,9 @@ public class MyUserDetails implements UserDetails {
         this.authorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
     }
 
     @Override
@@ -64,4 +70,6 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
+    public String getEmail(){ return email; }
 }

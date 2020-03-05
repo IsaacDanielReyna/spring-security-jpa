@@ -1,0 +1,48 @@
+<th:block th:replace="fragments/header">HEAD</th:block>
+<th:block th:replace="fragments/navigation :: nav">NAVIGATION</th:block>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1>Register</h1>
+            <form>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="username" class="form-control" id="username" aria-describedby="usernameHelp">
+                    <small id="usernameHelp" class="form-text text-muted">4-6 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
+                    <small id="passwordHelp" class="form-text text-muted">4-6 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="firstName" class="form-control" id="firstName" aria-describedby="firstNameHelp">
+                    <small id="firstNameHelp" class="form-text text-muted">4-15 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="lastName" class="form-control" id="lastName" aria-describedby="lastNameHelp">
+                    <small id="lastNameHelp" class="form-text text-muted">4-20 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer">FOOTER</th:block>

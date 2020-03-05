@@ -1,5 +1,6 @@
 package com.isaacreyna.springsecurityjpa.config;
 
+import com.isaacreyna.springsecurityjpa.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -30,8 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/").permitAll()
             //.antMatchers("/profile").hasRole("ADMIN")
             //.anyRequest().authenticated() // Force everything else to be authenticated, even if they do not exist
-            .and()
-            .exceptionHandling().accessDeniedPage("/accessDenied.html")
+            //.and()
+            //.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // See CustomAccessDeniedHandler.java
             .and()
             .formLogin()
             .loginPage("/login").permitAll();
@@ -41,5 +43,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean // clear text passwords! DO NOT USE IN PRODUCTION!!!
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
     }
 }
