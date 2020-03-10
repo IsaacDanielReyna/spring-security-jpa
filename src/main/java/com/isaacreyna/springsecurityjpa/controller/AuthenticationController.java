@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Controller
 public class AuthenticationController {
+
     @Autowired // Gets bean called userRepository
     private UserRepository userRepository;
 
@@ -32,7 +33,6 @@ public class AuthenticationController {
 
     @GetMapping("/register")
     public String register(User user){
-
         return "register";
     }
 

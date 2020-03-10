@@ -1,0 +1,63 @@
+<th:block th:replace="fragments/header">HEAD</th:block>
+<th:block th:replace="fragments/navigation :: nav">NAVIGATION</th:block>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1>Edit User</h1>
+            <form action="#" th:action="@{/users/edit}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="userName">Username</label>
+                    <input type="text" class="form-control" aria-describedby="userNameHelp" th:field="*{userName}">
+
+                    <small th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color:red;">userName Error</small>
+                    <small id="userNameHelp" class="form-text text-muted">4-10 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" th:field="*{password}" value="${password}" aria-describedby="passwordHelp">
+
+                    <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">password Error</small>
+                    <small id="passwordHelp" class="form-text text-muted">4-10 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" th:field="*{firstName}" aria-describedby="firstNameHelp">
+
+                    <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red;">firstName Error</small>
+                    <small id="firstNameHelp" class="form-text text-muted">4-15 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" th:field="*{lastName}" aria-describedby="lastNameHelp">
+
+                    <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red;">lastName Error</small>
+                    <small id="lastNameHelp" class="form-text text-muted">4-20 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="active">Active</label>
+                    <input type="text" class="form-control" th:field="*{active}" aria-describedby="activeHelp">
+
+                    <small th:if="${#fields.hasErrors('active')}" th:errors="*{active}" style="color:red;">active Error</small>
+                    <small id="activeHelp" class="form-text text-muted">4-20 Characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" th:field="*{email}" aria-describedby="emailHelp">
+
+                    <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;">email Error</small>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer">FOOTER</th:block>
