@@ -28,10 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             .antMatchers("/admin").hasRole("ADMIN")
-            .antMatchers("/user").hasAnyRole("ADMIN", "USER")
-            .antMatchers("/").permitAll()
-            //.antMatchers("/profile").hasRole("ADMIN")
-            //.anyRequest().authenticated() // Force everything else to be authenticated, even if they do not exist
+            .antMatchers("/user", "/users").hasAnyRole("ADMIN", "USER")
+            .antMatchers("/register").permitAll()
+            .antMatchers("/profile").hasAnyRole("ADMIN", "USER")
+            .antMatchers("/", "/demo/*", "/css/**", "/js/**", "/img/**").permitAll()
+            .anyRequest().authenticated() // Force everything else to be authenticated, even if they do not exist
             //.and()
             //.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // See CustomAccessDeniedHandler.java
             .and()

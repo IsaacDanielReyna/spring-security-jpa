@@ -1,19 +1,40 @@
 package com.isaacreyna.springsecurityjpa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotNull
+    @Column(unique = true) // Does not validate on runtime
+    @Size(min=4, max=10)
     private String userName;
+
+    @NotNull
+    @Size(min=4, max=10)
     private String password;
+
     private boolean active;
+
     private String roles;
+
+    @NotNull
+    @Size(min=4, max=6)
     private String firstName;
+
+    @NotNull
+    @Size(min=4, max=6)
     private String lastName;
+
+    @NotNull
+    @Column(unique = true)
+    @Size(min=10, max=30)
     private String email;
 
     public int getId() {
@@ -80,4 +101,17 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", roles='" + roles + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

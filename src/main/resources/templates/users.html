@@ -1,0 +1,36 @@
+<th:block th:replace="fragments/header">HEAD</th:block>
+<th:block th:replace="fragments/navigation :: nav">NAVIGATION</th:block>
+
+<div class="container">
+    <h1>Users</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Active</th>
+            <th scope="col">Roles</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.id}" />
+            <td th:text="${user.userName}" />
+            <td th:text="${user.password}" />
+            <td th:text="${user.active}" />
+            <td th:text="${user.roles}" />
+            <td th:text="${user.firstName}" />
+            <td th:text="${user.lastName}" />
+            <td th:text="${user.email}" />
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<th:block th:replace="fragments/footer">FOOTER</th:block>

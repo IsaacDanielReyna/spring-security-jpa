@@ -5,39 +5,46 @@
     <div class="row">
         <div class="col-sm-4">
             <h1>Register</h1>
-            <form>
-
+            <form action="#" th:action="@{/register}" th:object="${user}" method="post">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="username" class="form-control" id="username" aria-describedby="usernameHelp">
-                    <small id="usernameHelp" class="form-text text-muted">4-6 Characters</small>
+                    <label for="userName">Username</label>
+                    <input type="text" class="form-control" aria-describedby="userNameHelp" th:field="*{userName}">
+
+                    <small th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color:red;">userName Error</small>
+                    <small id="userNameHelp" class="form-text text-muted">4-10 Characters</small>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
-                    <small id="passwordHelp" class="form-text text-muted">4-6 Characters</small>
+                    <input type="password" class="form-control" th:field="*{password}" aria-describedby="passwordHelp">
+
+                    <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">password Error</small>
+                    <small id="passwordHelp" class="form-text text-muted">4-10 Characters</small>
                 </div>
 
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="firstName" class="form-control" id="firstName" aria-describedby="firstNameHelp">
+                    <input type="text" class="form-control" th:field="*{firstName}" aria-describedby="firstNameHelp">
+
+                    <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red;">firstName Error</small>
                     <small id="firstNameHelp" class="form-text text-muted">4-15 Characters</small>
                 </div>
 
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="lastName" class="form-control" id="lastName" aria-describedby="lastNameHelp">
+                    <input type="text" class="form-control" th:field="*{lastName}" aria-describedby="lastNameHelp">
+
+                    <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red;">lastName Error</small>
                     <small id="lastNameHelp" class="form-text text-muted">4-20 Characters</small>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    <input type="email" class="form-control" th:field="*{email}" aria-describedby="emailHelp">
+
+                    <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;">email Error</small>
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
-
-
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
