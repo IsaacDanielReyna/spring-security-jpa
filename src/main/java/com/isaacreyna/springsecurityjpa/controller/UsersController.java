@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -41,15 +42,26 @@ public class UsersController {
     @GetMapping("/edit/{uid}")
     public String editUser(@PathVariable("uid") int userID, Model model){
         Optional<User> user = userRepository.findById(userID);
-        if (user.isPresent()) {
-            model.addAttribute("user", user);
-        } else {
-            // TODO: redirect to 404?
-            System.out.println("user not found");
+        if (!user.isPresent()) {
+            return "redirect:/users";
         }
 
-        System.out.println(userID);
+        model.addAttribute("user", user);
         return "users/edit";
+    }
+
+    @PostMapping("/edit")
+    public String updateUser(@Valid User user, BindingResult result){
+        //TODO: Add custom password validation.
+        if (result.hasErrors()){
+            return "users/edit";
+        }
+
+        // Identify of entities is defined by their primary keys (user.id)
+        userRepository.save(user);
+
+        //TODO: Add update successful indicator
+        return "redirect:/users/edit/" + user.getId();
     }
 
     @PostMapping("/delete")
@@ -58,7 +70,6 @@ public class UsersController {
         //TODO: Only admins roles can modify database records.
         //TODO: Delete or reassign data created from user.
         //TODO: Show delete success/error indicator.
-        //TODO: Check if user with uid exists before trying to delete.
         Optional<User> user = userRepository.findById(userID);
         if (user.isPresent()){
             userRepository.deleteById(userID);

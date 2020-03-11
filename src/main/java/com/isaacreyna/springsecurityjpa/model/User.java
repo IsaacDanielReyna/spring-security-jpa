@@ -22,6 +22,7 @@ public class User {
 
     private boolean active;
 
+    // TODO: Change to roleId
     private String roles;
 
     @NotNull
