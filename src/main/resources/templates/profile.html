@@ -2,7 +2,35 @@
 <th:block th:replace="fragments/navigation :: nav">NAVIGATION</th:block>
 
 <div class="container">
-    <h1>DEFAULT PAGE</h1>
+    <h1>PROFILE PAGE</h1>
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td scope="col">ID: <span th:text="${user.id}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">Username: <span th:text="${user.userName}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">Password: <span th:text="${user.password}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">Status: <span th:text="${user.active}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">Role: <span th:text="${user.roles}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">First Name: <span th:text="${user.firstName}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">Last Name: <span th:text="${user.lastName}"></span></td>
+            </tr>
+            <tr>
+                <td scope="col">Email: <span th:text="${user.email}"></span></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <th:block th:replace="fragments/footer">FOOTER</th:block>

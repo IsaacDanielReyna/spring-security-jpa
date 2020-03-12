@@ -15,10 +15,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping(path="/users")
 public class UsersController {
-    // TODO: Create user
-    // TODO: Retrieve user
-    // TODO: Update user
-    // TODO: Delete user(s)
 
     @Autowired // This means to get the bean called userRepository
     private UserRepository userRepository;
@@ -29,21 +25,52 @@ public class UsersController {
         return "users";
     }
 
-    @GetMapping("/create")
-    public String createUser(){
-        return "users";
+
+
+    // TODO: Replace hardcoded roles from database.
+    @GetMapping("/add")
+    public String showAddUser(User user){
+        return "users/add";
     }
 
-    @GetMapping("/retrieve")
-    public String retrieveUser(){
-        return "users";
+    @PostMapping("/add")
+    public String addUser(@Valid User user, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "users/add";
+        }
+        // Check if username or email already exists
+        Optional<User> u = userRepository.findByUserNameOrEmail(user.getUserName(), user.getEmail());
+        if (!u.isPresent()) {
+
+            user.setActive(true);
+
+            try {
+                userRepository.save(user);
+            } catch (Exception e) {
+                // TODO: Display database error
+                return "users/add";
+            }
+        }
+
+        return "redirect:/users/";
+    }
+    @GetMapping("/view/{uid}")
+    public String viewUser(@PathVariable("uid") int userID, Model model){
+        Optional<User> user = userRepository.findById(userID);
+        if (!user.isPresent()) {
+            return "redirect:/users/";
+        }
+
+        model.addAttribute("user", user.get());
+        return "profile";
     }
 
     @GetMapping("/edit/{uid}")
     public String editUser(@PathVariable("uid") int userID, Model model){
         Optional<User> user = userRepository.findById(userID);
         if (!user.isPresent()) {
-            return "redirect:/users";
+            return "redirect:/users/";
         }
 
         model.addAttribute("user", user);
