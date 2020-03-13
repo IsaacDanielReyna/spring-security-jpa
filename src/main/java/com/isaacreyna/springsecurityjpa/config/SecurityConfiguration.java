@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             .antMatchers("/admin").hasRole("ADMIN")
-            .antMatchers("/user", "/users").hasAnyRole("ADMIN", "USER")
+            .antMatchers("/user", "/users").hasAnyRole("ADMIN")
             .antMatchers("/register").permitAll()
             .antMatchers("/profile").hasAnyRole("ADMIN", "USER")
             .antMatchers("/", "/demo/*", "/css/**", "/js/**", "/img/**").permitAll()
@@ -36,9 +36,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             //.and()
             //.exceptionHandling().accessDeniedHandler(accessDeniedHandler()) // See CustomAccessDeniedHandler.java
             .and()
-            .formLogin()
-            .loginPage("/login").permitAll();
-            //.and().logout().logoutUrl("/logout").logoutSuccessful("/login");
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+            .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
+            //.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
     }
 
     @Bean // clear text passwords! DO NOT USE IN PRODUCTION!!!

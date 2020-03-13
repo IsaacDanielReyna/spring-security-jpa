@@ -3,11 +3,9 @@ package com.isaacreyna.springsecurityjpa.controller;
 import com.isaacreyna.springsecurityjpa.model.User;
 import com.isaacreyna.springsecurityjpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -25,7 +23,6 @@ public class AuthenticationController {
         return "login";
     }
 
-    // TODO: Fix logout redirection
     @GetMapping("/logout")
     public String logout(){
         return "logout";
