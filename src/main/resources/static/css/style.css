@@ -2,3 +2,20 @@
     background: #518926!important;
     margin-bottom: 50px;
 }
+.icon-settings{
+    height: 25px;
+    width: 22px;
+    display: inline-block;
+}
+.icon-settings:hover{
+    text-decoration: none;
+}
+
+.icon-view{
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+}
+.icon-view:hover{
+    text-decoration: none;
+}
