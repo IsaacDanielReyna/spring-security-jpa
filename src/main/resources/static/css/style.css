@@ -2,20 +2,22 @@
     background: #518926!important;
     margin-bottom: 50px;
 }
-.icon-settings{
+
+.users-actions-icon{
     height: 25px;
     width: 22px;
     display: inline-block;
 }
-.icon-settings:hover{
+.users-actions-icon a{
+    color: #358fdc;
+}
+.users-actions-icon a:hover{
+    color: #2c539a;
     text-decoration: none;
 }
-
-.icon-view{
-    height: 25px;
-    width: 25px;
-    display: inline-block;
+.users-actions-icon.users-delete-icon a{
+    color: #dc3545;
 }
-.icon-view:hover{
-    text-decoration: none;
+.users-actions-icon.users-delete-icon a:hover {
+    color: #c82333;
 }

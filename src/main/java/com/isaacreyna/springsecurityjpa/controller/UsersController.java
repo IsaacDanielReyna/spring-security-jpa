@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -22,10 +23,8 @@ public class UsersController {
     @GetMapping("")
     public String retrieveUsers(Model model){
         model.addAttribute("users", userRepository.findAll());
-        return "users";
+        return "users/index";
     }
-
-
 
     // TODO: Replace hardcoded roles from database.
     @GetMapping("/add")
@@ -55,6 +54,7 @@ public class UsersController {
 
         return "redirect:/users/";
     }
+
     @GetMapping("/view/{uid}")
     public String viewUser(@PathVariable("uid") int userID, Model model){
         Optional<User> user = userRepository.findById(userID);
@@ -63,7 +63,12 @@ public class UsersController {
         }
 
         model.addAttribute("user", user.get());
-        return "profile";
+        return "users/view";
+    }
+
+    @GetMapping("/edit")
+    public String edit(){
+        return "redirect:/users/";
     }
 
     @GetMapping("/edit/{uid}")
@@ -72,27 +77,46 @@ public class UsersController {
         if (!user.isPresent()) {
             return "redirect:/users/";
         }
-
+        model.addAttribute("uid", userID);
         model.addAttribute("user", user);
         return "users/edit";
     }
 
-    @PostMapping("/edit")
-    public String updateUser(@Valid User user, BindingResult result){
+    @PostMapping("/edit/{uid}")
+    public String editUser(@Valid User user, BindingResult result, @PathVariable("uid") int userID, Model model, RedirectAttributes redirectAttributes){
         //TODO: Add custom password validation.
         if (result.hasErrors()){
+            model.addAttribute("uid", userID);
+            model.addAttribute("message", "Check all fields and try again.");
+            model.addAttribute("alertClass", "alert-danger");
             return "users/edit";
         }
 
-        // Identify of entities is defined by their primary keys (user.id)
+        // Entities are defined by their primary keys (user.id)
         userRepository.save(user);
-
-        //TODO: Add update successful indicator
+        redirectAttributes.addFlashAttribute("message", "User updated");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
         return "redirect:/users/edit/" + user.getId();
     }
 
-    @PostMapping("/delete")
-    public String deleteUser(@RequestParam("uid") int userID){
+    @PostMapping("/edit")
+    public String updateUser(@Valid User user, BindingResult result, RedirectAttributes redirectAttributes){
+        //TODO: Add custom password validation.
+        if (result.hasErrors()){
+            redirectAttributes.addFlashAttribute("message", "Check all fields and try again.");
+            redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+            return "users/edit";
+        }
+
+        // Entities are defined by their primary keys (user.id)
+        userRepository.save(user);
+        redirectAttributes.addFlashAttribute("message", "User updated");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+        return "redirect:/users/edit/" + user.getId();
+    }
+
+    @GetMapping("/delete/{uid}")
+    public String deleteUser(@PathVariable("uid") int userID){
 
         //TODO: Only admins roles can modify database records.
         //TODO: Delete or reassign data created from user.

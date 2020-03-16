@@ -48,7 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             //.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
     }
 
-    @Bean // clear text passwords! DO NOT USE IN PRODUCTION!!!
+    // TODO: Implement password encoding
+    @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
