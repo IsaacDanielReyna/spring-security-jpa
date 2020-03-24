@@ -1,6 +1,8 @@
 package com.isaacreyna.springsecurityjpa.controller;
 
+import com.isaacreyna.springsecurityjpa.model.Role;
 import com.isaacreyna.springsecurityjpa.model.User;
+import com.isaacreyna.springsecurityjpa.repository.RoleRepository;
 import com.isaacreyna.springsecurityjpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.validation.Valid;
 import java.util.Optional;
 
+
+
+
 @Controller
 @RequestMapping(path="/users")
 public class UsersController {
@@ -20,15 +25,21 @@ public class UsersController {
     @Autowired // This means to get the bean called userRepository
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @GetMapping("")
     public String retrieveUsers(Model model){
         model.addAttribute("users", userRepository.findAll());
+        //model.addAttribute("roles", roleRepository.findAll());
         return "users/index";
     }
 
-    // TODO: Replace hardcoded roles from database.
+    // TODO: Fix roles from disapearing after a form validation error.
+    // TODO: Fix page link http://localhost:8080/users/users/add
     @GetMapping("/add")
-    public String showAddUser(User user){
+    public String showAddUser(User user, Model model){
+        model.addAttribute("roles", roleRepository.findAll());
         return "users/add";
     }
 
@@ -74,9 +85,13 @@ public class UsersController {
     @GetMapping("/edit/{uid}")
     public String editUser(@PathVariable("uid") int userID, Model model){
         Optional<User> user = userRepository.findById(userID);
+
         if (!user.isPresent()) {
             return "redirect:/users/";
         }
+
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("uid", userID);
         model.addAttribute("user", user);
         return "users/edit";
@@ -84,7 +99,7 @@ public class UsersController {
 
     @PostMapping("/edit/{uid}")
     public String editUser(@Valid User user, BindingResult result, @PathVariable("uid") int userID, Model model, RedirectAttributes redirectAttributes){
-        //TODO: Add custom password validation.
+        //TODO: Add custom password validation to ignore empty password when editing.
         if (result.hasErrors()){
             model.addAttribute("uid", userID);
             model.addAttribute("message", "Check all fields and try again.");
@@ -121,6 +136,7 @@ public class UsersController {
         //TODO: Only admins roles can modify database records.
         //TODO: Delete or reassign data created from user.
         //TODO: Show delete success/error indicator.
+        // TODO: Delete record from join table 'user_roles' when user is deleted
         Optional<User> user = userRepository.findById(userID);
         if (user.isPresent()){
             userRepository.deleteById(userID);

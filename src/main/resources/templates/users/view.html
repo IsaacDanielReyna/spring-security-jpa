@@ -18,7 +18,7 @@
                 <td scope="col">Status: <span th:text="${user.active}"></span></td>
             </tr>
             <tr>
-                <td scope="col">Role: <span th:text="${user.roles}"></span></td>
+                <td scope="col">Role: <th:block th:each="role : ${user.roles}"><span th:text="${role.name}"></span></th:block></td>
             </tr>
             <tr>
                 <td scope="col">First Name: <span th:text="${user.firstName}"></span></td>

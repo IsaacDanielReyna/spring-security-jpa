@@ -1,9 +1,11 @@
 package com.isaacreyna.springsecurityjpa.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -23,12 +25,18 @@ public class MyUserDetails implements UserDetails {
         this.userName = user.getUserName();
         this.password = user.getPassword();
         this.active = user.isActive();
-        this.authorities = Arrays.stream(user.getRoles().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
+
+        // TODO: Refresh a user's role after a role update.
+        List<Role> roles = user.getRoles();
+        List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+        for (Role r : roles) {
+            auths.add(new SimpleGrantedAuthority(r.getName()));
+        }
+        this.authorities = auths;
+
     }
 
     @Override

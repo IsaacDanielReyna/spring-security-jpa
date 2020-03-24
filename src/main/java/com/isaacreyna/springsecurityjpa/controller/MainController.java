@@ -1,5 +1,6 @@
 package com.isaacreyna.springsecurityjpa.controller;
 
+import com.isaacreyna.springsecurityjpa.model.Role;
 import com.isaacreyna.springsecurityjpa.model.User;
 import com.isaacreyna.springsecurityjpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.*;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -19,6 +21,11 @@ public class MainController {
     ) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
+        List<Role> roles = new LinkedList<Role>();
+        Role role = new Role();
+        role.setId(1);
+        role.setName("ROLE_USER");
+        roles.add(role);
 
         User u = new User();
         u.setUserName(userName);
@@ -26,7 +33,8 @@ public class MainController {
         u.setLastName(lastName);
         u.setPassword(password);
         u.setEmail(email);
-        u.setRoles("ROLE_USER");
+        //u.setRoles("ROLE_USER");
+        u.setRoles(roles);
         u.setActive(true);
         userRepository.save(u);
 

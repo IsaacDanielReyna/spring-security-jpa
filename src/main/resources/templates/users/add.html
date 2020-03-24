@@ -24,9 +24,8 @@
 
                 <div class="form-group">
                     <label for="roles">Role</label>
-                    <select class="form-control" name="roles" aria-describedby="rolesHelp">
-                        <option value="ROLE_USER">User</option>
-                        <option value="ROLE_ADMIN">Admin</option>
+                    <select class="form-control" name="roles" th:field="*{roles}" aria-describedby="rolesHelp">
+                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}">ROLE</option>
                     </select>
                     <small th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" style="color:red;">Incompatible value</small>
                     <small id="rolesHelp" class="form-text text-muted">User must relogin for permissions to update.</small>

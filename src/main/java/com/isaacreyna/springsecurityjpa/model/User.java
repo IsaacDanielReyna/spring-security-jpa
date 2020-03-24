@@ -3,6 +3,9 @@ package com.isaacreyna.springsecurityjpa.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -22,9 +25,6 @@ public class User {
 
     private boolean active;
 
-    // TODO: Change to roleId
-    private String roles;
-
     @NotNull
     @Size(min=4, max=6)
     private String firstName;
@@ -37,6 +37,22 @@ public class User {
     @Column(unique = true)
     @Size(min=10, max=30)
     private String email;
+
+    //@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany()
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public int getId() {
         return id;
@@ -68,14 +84,6 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
     }
 
     public String getFirstName() {
@@ -115,4 +123,5 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }
