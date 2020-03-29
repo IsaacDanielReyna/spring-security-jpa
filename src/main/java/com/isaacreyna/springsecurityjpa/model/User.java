@@ -1,18 +1,28 @@
 package com.isaacreyna.springsecurityjpa.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Entity
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Omits given properties that are displayed by default in JSON output.
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    /**
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
+    private Date purchaseDate;
+    /**/
 
     @NotNull
     @Column(unique = true) // Does not validate on runtime
